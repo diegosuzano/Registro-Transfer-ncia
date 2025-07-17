@@ -1,19 +1,17 @@
-
 import streamlit as st
 import pandas as pd
 from datetime import datetime
 import gspread
+import json
 from google.oauth2.service_account import Credentials
 
-# Caminho para o arquivo de credenciais JSON da conta de serviço
-CREDENTIALS_FILE = "streamlit-transferencias-255ce73fd8a1.json"
+# Autenticação com Google Sheets via segredo seguro
+service_account_info = json.loads(st.secrets["GOOGLE_SERVICE_ACCOUNT_JSON"])
+credentials = Credentials.from_service_account_info(service_account_info)
+client = gspread.authorize(credentials)
+
 SPREADSHEET_NAME = "Transferencias"
 SHEET_NAME = "Página1"
-
-# Autenticação com Google Sheets (usando google-auth)
-scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
-credentials = Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=scope)
-client = gspread.authorize(credentials)
 sheet = client.open(SPREADSHEET_NAME).worksheet(SHEET_NAME)
 
 st.set_page_config(page_title="Registro Transferência", layout="centered")
@@ -41,7 +39,7 @@ data = st.date_input("Data", value=datetime.today())
 placa = st.text_input("Placa do caminhão")
 conferente = st.text_input("Nome do conferente")
 
-# Campos com botoes
+# Campos com botões
 st.subheader("Fábrica")
 for campo in campos_tempo[:7]:
     registrar_tempo(campo)
@@ -86,12 +84,24 @@ if st.button("✅ Salvar Registro"):
         tempo_percurso
     ]
 
-    try:
-        sheet.append_row(nova_linha)
-        st.success("Registro salvo com sucesso no Google Sheets!")
-        for campo in campos_tempo:
-            st.session_state[campo] = ""
-    except Exception as e:
-        st.error(f"Erro ao salvar no Google Sheets: {e}")
+    # Cabeçalhos da planilha
+    headers = [
+        "Data", "Placa do caminhão", "Nome do conferente",
+        *campos_tempo,
+        "Tempo de Carregamento", "Tempo Espera Doca", "Tempo Total",
+        "Tempo de Descarregamento CD", "Tempo Espera Doca CD", "Tempo Total CD", "Tempo Percurso Para CD"
+    ]
 
+    # Se a planilha estiver vazia ou sem cabeçalhos, escreve os cabeçalhos
+    if sheet.row_count == 0 or sheet.cell(1, 1).value != "Data":
+        sheet.insert_row(headers, 1)
+
+    # Adiciona nova linha
+    sheet.append_row(nova_linha)
+
+    st.success("Registro salvo com sucesso no Google Sheets!")
+
+    # Resetar campos
+    for campo in campos_tempo:
+        st.session_state[campo] = ""
 
