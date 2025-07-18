@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "projeto-transferencia",
+  "private_key_id": "6df9655823bda617e7059e120f26a0a06f5a6201",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCn0zoMER7cwAsC\njhbyOw1i8ViNjWh4wQcElNe/b1QiiEGDCsV6Tf+pHRc8/dPSv1ML7UNQa/ql5b1S\nTJEQF9dbuumGIoGAqGUuCf/LhFLhgv7h9FtqnjkJLzs9fDwg+uvL2R5xmQYdjfgM\njo42CMAkwd9/7MTzR5BWIeq5HN8n0LCz7/xwPysQZRgVx5OItlTYwUoc94HkSqGH\n4DwalUc4pUiKweRPLJsYkMAnt5XMyhCl+1uOkwSpLTbZYtB7oWvaIfiadMfwCj0G\nvYkjDBEKRx5lCJsKInFfof4zcPmuRsDtO3hUVGY4DnZaecEDnRkm3a+S6IuZs7hQ\nuIJ4rrdTAgMBAAECggEARyjwwYIW6HpDkNtHzoEMjYoRRsARbrZGMAKesozVi2jk\nAlj0YAYnpADyRAnKod8/Ktz5QGXwmxxdWMKfdcfuKHaKIzaJW9DLSiiyPgzHCdj+\nEzgF9SDOxV6yC0Gcy00p4z8WQgulBK4YYdamZTHzqwJLrtXpstAC2wq5mLEtzBbo\ntuecYfGJOt29EdP8ub5f6Xsy/r5Mw9P28M4ZsqcA1BGOcV0I6RIIYaN9K8wufQLk\nsuNNIhPIFkWyYzz1ibtv2tB7hfXK8VbJMHhyl3v9P5k3in7wCUBrEpY9A3Jyz6Fg\nb6mIc0rZyJZElwdm0gSw/lwsAwge2h7KEkYz39vhBQKBgQDPWB3NO0MsrgveIDH/\n9VXkogiCS5ckBGwegP5fSIongWjmivKuH3ecpjsffLpvSZavbgLqmXs+jrfho/qi\nTNeH2bRbn9XxfhT+keExZT6zNpm+3yb8LDLyHjXvM/TDLh85U48D20XRCUw2gbP4\ns3RYyBTvsvWYunQtsr8jPzy3vQKBgQDPNQ+wSo5YeA2oReqQvHMQgJ0hLdpTV+7P\njoj+pXCGgxzojDiZePXU4OTrcoI8QbcTBoJEtztqT2Bo8AsTr57LRL/I+5W5DTfB\n7yLfZTELAsMp9IvHWpgZqk/niOcpkfliSh6wMIZNZ4s3nNrcp6nZlGKgSuw1/LL3\njunxwchUTwKBgAH7A33cXQ3mM7LRd+jL/SAL9Czab/0mFapM7SEX3kn2UHwzQ5Iq\nNshGRjZMyLMbbtcKI/j9slGsp1D+cfxu43gmujRN2ItP+v9bgV0pbGnl0Z4jH4o1\nGd96LmW0h1f97sprY+hThd0zS4kRwBhWDnxynNCVUwc8cLOnC3BYwEm5AoGBAI2x\nq1jSoyS8dBpuNUlklQrj6I+X24TCzPwCbIw2dgyF/G7J9Kp+nR1F7UVUuNqb1aWc\n/dgftPGt9i/Mdsavgdde3AeEg45YC5kC/sXlXPQ6n1tBb5STzw89+AZNCEbVG8Sr\nCvFRPYYRGJKfIMtjnDK91fPnSEBi3b+Ma053RZbhAoGAVHSu5ieGXvF8dS6vH7QV\nrbFcoxVTsGMF+GuKhLlwOHRMHW5aYWAS6CNL8P0bme+ghrHTmYhEx+g+cBE2NzwK\nPRo81MssY7C9NjhtSvMjnKdOJbm99RFvf7tHjR7Ei5omNVPSWA4kmVfe+c0trtIz\nrm6vXit0zYmFn/WM8UxE8Pc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "streamlit-bot@projeto-transferencia.iam.gserviceaccount.com",
+  "client_id": "114197741574694521149",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/streamlit-bot%40projeto-transferencia.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
