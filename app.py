@@ -1,18 +1,11 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-import gspread
-import json
-from google.oauth2.service_account import Credentials
+import os
 
-# Autenticação com Google Sheets via segredo seguro
-service_account_info = json.loads(st.secrets["GOOGLE_SERVICE_ACCOUNT_JSON"])
-credentials = Credentials.from_service_account_info(service_account_info)
-client = gspread.authorize(credentials)
-
-SPREADSHEET_NAME = "Transferencias"
-SHEET_NAME = "Página1"
-sheet = client.open(SPREADSHEET_NAME).worksheet(SHEET_NAME)
+# Caminho do arquivo Excel existente
+EXCEL_PATH = "Controle Transferencia.xlsx"
+SHEET_NAME = "Basae"
 
 st.set_page_config(page_title="Registro Transferência", layout="centered")
 st.title("🚚 Registro de Transferência de Carga")
@@ -39,7 +32,7 @@ data = st.date_input("Data", value=datetime.today())
 placa = st.text_input("Placa do caminhão")
 conferente = st.text_input("Nome do conferente")
 
-# Campos com botões
+# Campos com botoes
 st.subheader("Fábrica")
 for campo in campos_tempo[:7]:
     registrar_tempo(campo)
@@ -70,38 +63,31 @@ tempo_percurso = calc_tempo("Entrada CD", "Saída do pátio")
 
 # Botão para salvar
 if st.button("✅ Salvar Registro"):
-    nova_linha = [
-        str(data),
-        placa,
-        conferente,
-        *[st.session_state[campo] for campo in campos_tempo],
-        tempo_carreg,
-        tempo_espera,
-        tempo_total,
-        tempo_descarga,
-        tempo_espera_cd,
-        tempo_total_cd,
-        tempo_percurso
-    ]
+    nova_linha = {
+        "Data": data,
+        "Placa do caminhão": placa,
+        "Nome do conferente": conferente,
+        **{campo: st.session_state[campo] for campo in campos_tempo},
+        "Tempo de Carregamento": tempo_carreg,
+        "Tempo Espera Doca": tempo_espera,
+        "Tempo Total": tempo_total,
+        "Tempo de Descarregamento CD": tempo_descarga,
+        "Tempo Espera Doca CD": tempo_espera_cd,
+        "Tempo Total CD": tempo_total_cd,
+        "Tempo Percurso Para CD": tempo_percurso,
+    }
 
-    # Cabeçalhos da planilha
-    headers = [
-        "Data", "Placa do caminhão", "Nome do conferente",
-        *campos_tempo,
-        "Tempo de Carregamento", "Tempo Espera Doca", "Tempo Total",
-        "Tempo de Descarregamento CD", "Tempo Espera Doca CD", "Tempo Total CD", "Tempo Percurso Para CD"
-    ]
+    if os.path.exists(EXCEL_PATH):
+        df_existente = pd.read_excel(EXCEL_PATH, sheet_name=SHEET_NAME)
+        df_novo = pd.concat([df_existente, pd.DataFrame([nova_linha])], ignore_index=True)
+    else:
+        df_novo = pd.DataFrame([nova_linha])
 
-    # Se a planilha estiver vazia ou sem cabeçalhos, escreve os cabeçalhos
-    if sheet.row_count == 0 or sheet.cell(1, 1).value != "Data":
-        sheet.insert_row(headers, 1)
+    with pd.ExcelWriter(EXCEL_PATH, engine="openpyxl", mode="w") as writer:
+        df_novo.to_excel(writer, sheet_name=SHEET_NAME, index=False)
 
-    # Adiciona nova linha
-    sheet.append_row(nova_linha)
-
-    st.success("Registro salvo com sucesso no Google Sheets!")
+    st.success("Registro salvo com sucesso!")
 
     # Resetar campos
     for campo in campos_tempo:
         st.session_state[campo] = ""
-
